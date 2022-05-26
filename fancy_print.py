@@ -21,11 +21,8 @@ def fancy_print(*to_print, end="\n", rate:float=0.05, delay:float=1, does_clear:
 
     sleep(delay)
 
-def fancy_input(*to_print, end="\n", rate:float=0.05, delay:float=1, does_clear:bool=False):
-    if does_clear:
-        print("033c", end="")
-    
-    fancy_print(*to_print, end=end, rate=rate, delay=0)
+def fancy_input(*to_print, end="\n", rate:float=0.05, delay:float=1, does_clear:bool=False):  
+    fancy_print(*to_print, end=end, rate=rate, delay=0, does_clear=does_clear)
     inp = input()
     sleep(delay)
     return inp
