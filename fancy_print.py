@@ -28,13 +28,10 @@ def fancy_input(*to_print, end="\n", rate:float=0.05, delay:float=1, does_clear:
     return inp
 
 def say(json_entry, path, rate:float=0.05, delay:float=1, does_clear:bool=False):
-    if does_clear:
-        print("033c", end="")
-    
     data = json_setup(path)
-    fancy_print(data[json_entry], rate=rate, delay=delay)
+    fancy_print(data[json_entry], rate=rate, delay=delay, does_clear=does_clear)
 
-def ask(json_entry, path, end=":", rate:float=0.05, does_clear:bool=False):
+def ask(json_entry, path, end=":", rate:float=0.05, delay:float=1, does_clear:bool=False):
     data = json_setup(path)[json_entry]
     
     options = ""
@@ -43,16 +40,11 @@ def ask(json_entry, path, end=":", rate:float=0.05, does_clear:bool=False):
             options += "/" + i
     options = "[" + options[1:] + "]"
 
-    if does_clear:
-        print("033c", end="")
-
-    fancy_print(data["context"], rate=rate)
+    fancy_print(data["context"], rate=rate, delay=delay, does_clear=does_clear)
 
     while True:
-        sleep(rate)
-        inp = fancy_input(data["ask"], options + end, rate=rate)
+        inp = fancy_input(data["ask"], options + end, rate=rate, delay=delay)
         
         if inp in data.keys() and inp != "context" and inp != "ask":
-            sleep(rate)
-            fancy_print(data[inp], rate=rate)
+            fancy_print(data[inp], rate=rate, delay=delay)
             return inp
